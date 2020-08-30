@@ -5,6 +5,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	. "github.com/logrusorgru/aurora"
 	"github.com/machinebox/graphql"
 	"log"
 	"os"
@@ -25,6 +26,11 @@ func main() {
 		return
 	}
 
+	fmt.Println()
+	fmt.Println("[ Results for search key : ", Bold(*searchTerm), " ]")
+	fmt.Println("Searching...")
+	fmt.Println()
+
 	// create a client (safe to share across requests)
 	client := graphql.NewClient("https://packages.gentoo.org/api/graphql/")
 
@@ -40,6 +46,7 @@ func main() {
 		Atom,
 		Versions {
 		  Description,
+          Homepage,
           Version,
           License,
           Keywords,
@@ -100,8 +107,10 @@ func main() {
 		gpackage = respData.PackageSearch[0]
 	} else {
 		for idx, gpackage := range respData.PackageSearch {
-			fmt.Println("[" + strconv.Itoa(idx) + "] " + gpackage.Atom)
-			fmt.Println("    " + gpackage.Versions[0].Description)
+			fmt.Println(Bold(Green("[" + strconv.Itoa(idx) + "] ")), Bold(gpackage.Atom))
+			fmt.Println("      ", Green("Homepage:      "), strings.Join(gpackage.Versions[0].Homepage, ", "))
+			fmt.Println("      ", Green("Description:   "), gpackage.Versions[0].Description)
+			fmt.Println("      ", Green("License:       "), gpackage.Versions[0].License)
 			fmt.Println()
 
 			if idx >= 10 {
@@ -109,8 +118,11 @@ func main() {
 			}
 		}
 
+		fmt.Println("[ Applications found : ", Bold(strconv.Itoa(len(respData.PackageSearch))), " ]")
+		fmt.Println()
+
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Which package have you been looking for? Please enter 0-" + strconv.Itoa(min(10-1, len(respData.PackageSearch)-1)) + ": ")
+		fmt.Print(Bold("Which package have you been looking for? "), "[", Bold(Green("0-" + strconv.Itoa(min(10-1, len(respData.PackageSearch)-1)))), "] ")
 		text, _ := reader.ReadString('\n')
 
 		selectedIdx, err := strconv.Atoi(strings.ReplaceAll(text, "\n", ""))
