@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/arzano/pgo/pkg/models"
-	"github.com/machinebox/graphql"
 	. "github.com/logrusorgru/aurora"
+	"github.com/machinebox/graphql"
 	"log"
 	"os"
 	"sort"
@@ -15,7 +15,6 @@ import (
 	"strings"
 	"time"
 )
-
 
 func showPackage(searchTerm string, first bool) {
 
@@ -74,18 +73,18 @@ func showPackage(searchTerm string, first bool) {
 	fmt.Println()
 }
 
-func printVersions(versions []*models.Version){
+func printVersions(versions []*models.Version) {
 	fmt.Println(Underline(Bold(Green("Available Versions"))))
 	sort.Slice(versions, func(i, j int) bool {
 		return versions[i].GreaterThan(*versions[j])
 	})
 	for _, version := range versions {
-		fmt.Println(Bold("  " + version.Version + ": "), version.Keywords)
+		fmt.Println(Bold("  "+version.Version+": "), version.Keywords)
 	}
 	fmt.Println("")
 }
 
-func printMetadata(gpackage models.Package){
+func printMetadata(gpackage models.Package) {
 	fmt.Println(Underline(Bold(Green("Package Metadata"))))
 	if gpackage.Longdescription != "" {
 		fmt.Println(Bold("  Full description: "), gpackage.Longdescription)
@@ -94,17 +93,17 @@ func printMetadata(gpackage models.Package){
 	var useExpands []string
 	if gpackage.Versions[0].Version != "9999" {
 		for _, useflag := range gpackage.Versions[0].Useflags {
-			if !strings.HasPrefix(useflag, gpackage.Name + "_"){
+			if !strings.HasPrefix(useflag, gpackage.Name+"_") {
 				useflags = append(useflags, useflag)
-			}else{
+			} else {
 				useExpands = append(useExpands, useflag)
 			}
 		}
 	} else if len(gpackage.Versions) > 1 {
 		for _, useflag := range gpackage.Versions[0].Useflags {
-			if !strings.HasPrefix(useflag, gpackage.Name + "_"){
+			if !strings.HasPrefix(useflag, gpackage.Name+"_") {
 				useflags = append(useflags, useflag)
-			}else{
+			} else {
 				useExpands = append(useExpands, useflag)
 			}
 		}
@@ -114,7 +113,7 @@ func printMetadata(gpackage models.Package){
 	fmt.Println(Bold("  License: "), gpackage.Versions[0].License)
 	fmt.Print(Bold("  Maintainers: "))
 	for idx, maintainer := range gpackage.Maintainers {
-		if idx < len(gpackage.Maintainers) - 1 {
+		if idx < len(gpackage.Maintainers)-1 {
 			fmt.Print(maintainer.Name + ", ")
 		} else {
 			fmt.Print(maintainer.Name)
@@ -124,7 +123,7 @@ func printMetadata(gpackage models.Package){
 	fmt.Println()
 }
 
-func printBugs(bugs []*models.Bug){
+func printBugs(bugs []*models.Bug) {
 	if len(bugs) > 0 {
 		fmt.Println(Underline(Bold(Green("Bugs"))))
 		for _, bug := range bugs {
@@ -134,7 +133,7 @@ func printBugs(bugs []*models.Bug){
 	}
 }
 
-func printPullRequests(pullRequests []*models.GithubPullRequest){
+func printPullRequests(pullRequests []*models.GithubPullRequest) {
 	if len(pullRequests) > 0 {
 		fmt.Println(Underline(Bold(Green("Pull Requests"))))
 		for _, pr := range pullRequests {
@@ -144,7 +143,7 @@ func printPullRequests(pullRequests []*models.GithubPullRequest){
 	}
 }
 
-func printQAReports(gpackage models.Package){
+func printQAReports(gpackage models.Package) {
 	qareportsfound := false
 	for _, version := range gpackage.Versions {
 		if len(version.PkgCheckResults) > 0 {
@@ -171,7 +170,7 @@ func printQAReports(gpackage models.Package){
 	}
 }
 
-func printDependencies(gpackage models.Package){
+func printDependencies(gpackage models.Package) {
 	if len(gpackage.ReverseDependencies) > 0 {
 		fmt.Println(Underline(Bold(Green("Reverse Dependencies"))))
 		var revDeps []string
@@ -186,7 +185,7 @@ func printDependencies(gpackage models.Package){
 	fmt.Println("")
 }
 
-func printChangelog(commits []*models.Commit){
+func printChangelog(commits []*models.Commit) {
 	fmt.Println(Underline(Bold(Green("Changelog"))))
 
 	sort.Slice(commits, func(i, j int) bool {
@@ -233,7 +232,7 @@ func findPackage(searchTerm string, first bool) (models.Package, error) {
 		gpackage = respData.PackageSearch[0]
 	} else {
 		for idx, gpackage := range respData.PackageSearch {
-			fmt.Println(Bold(Green("[" + strconv.Itoa(idx) + "] ")), Bold(gpackage.Atom))
+			fmt.Println(Bold(Green("["+strconv.Itoa(idx)+"] ")), Bold(gpackage.Atom))
 			fmt.Println("      ", Green("Homepage:      "), strings.Join(gpackage.Versions[0].Homepage, ", "))
 			fmt.Println("      ", Green("Description:   "), gpackage.Versions[0].Description)
 			fmt.Println("      ", Green("License:       "), gpackage.Versions[0].License)
@@ -248,7 +247,7 @@ func findPackage(searchTerm string, first bool) (models.Package, error) {
 		fmt.Println()
 
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print(Bold("Which package have you been looking for? "), "[", Bold(Green("0-" + strconv.Itoa(min(10-1, len(respData.PackageSearch)-1)))), "] ")
+		fmt.Print(Bold("Which package have you been looking for? "), "[", Bold(Green("0-"+strconv.Itoa(min(10-1, len(respData.PackageSearch)-1)))), "] ")
 		text, _ := reader.ReadString('\n')
 
 		selectedIdx, err := strconv.Atoi(strings.ReplaceAll(text, "\n", ""))
@@ -340,4 +339,3 @@ func Deduplicate(items []string) []string {
 		return items
 	}
 }
-

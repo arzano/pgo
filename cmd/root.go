@@ -3,9 +3,9 @@ package cmd
 import (
 	"fmt"
 	"github.com/mitchellh/go-homedir"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"os"
-    "github.com/spf13/cobra"
-    "github.com/spf13/viper"
 	"strings"
 )
 
@@ -22,8 +22,8 @@ var searchPackageResults bool
 var rootCmd = &cobra.Command{
 	Use:   "pgo [searchTerm or subcommand]",
 	Short: "pgo is a command line interface for packages.gentoo.org",
-	Long: `Still TODO`,
-	Args: cobra.ExactArgs(1),
+	Long:  `Still TODO`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
 		showPackage(args[0], !searchPackageResults)
@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 var addCmd = &cobra.Command{
 	Use:   "maintainer",
 	Short: "Search for package maintainers",
-	Long: `Still TODO`,
+	Long:  `Still TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
 		fmt.Println("Sub-cmd: " + strings.Join(args, ", "))
@@ -59,8 +59,6 @@ func Execute() {
 		os.Exit(1)
 	}
 }
-
-
 
 func initConfig() {
 	// Find home directory.
