@@ -1,6 +1,6 @@
 package main
 
-import "github.com/arzano/soko-cli/cmd"
+import "github.com/arzano/pgo/cmd"
 
 func main() {
 	cmd.Execute()

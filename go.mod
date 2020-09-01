@@ -1,4 +1,4 @@
-module github.com/arzano/soko-cli
+module github.com/arzano/pgo
 
 go 1.14
 

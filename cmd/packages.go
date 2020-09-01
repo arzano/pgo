@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/arzano/soko-cli/pkg/models"
+	"github.com/arzano/pgo/pkg/models"
 	"github.com/machinebox/graphql"
 	. "github.com/logrusorgru/aurora"
 	"log"

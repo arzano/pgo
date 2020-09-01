@@ -20,8 +20,8 @@ var showVersions bool
 var searchPackageResults bool
 
 var rootCmd = &cobra.Command{
-	Use:   "soko [searchTerm or subcommand]",
-	Short: "Soko is a command line interface for packages.g.o",
+	Use:   "pgo [searchTerm or subcommand]",
+	Short: "pgo is a command line interface for packages.gentoo.org",
 	Long: `Still TODO`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
@@ -71,7 +71,7 @@ func initConfig() {
 
 	// Search config in home directory
 	viper.SetConfigType("toml")
-	viper.SetConfigFile(home + "/.soko")
+	viper.SetConfigFile(home + "/.pgo")
 
 	viper.AutomaticEnv()
 
