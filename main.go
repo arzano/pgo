@@ -1,6 +1,6 @@
 package main
 
-import "soko-cli/cmd"
+import "github.com/arzano/soko-cli/cmd"
 
 func main() {
 	cmd.Execute()

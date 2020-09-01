@@ -1,4 +1,4 @@
-module soko-cli
+module github.com/arzano/soko-cli
 
 go 1.14
 
