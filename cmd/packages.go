@@ -114,9 +114,17 @@ func printMetadata(gpackage models.Package) {
 	fmt.Print(Bold("  Maintainers: "))
 	for idx, maintainer := range gpackage.Maintainers {
 		if idx < len(gpackage.Maintainers)-1 {
-			fmt.Print(maintainer.Name + ", ")
+			if maintainer.Name != "" {
+				fmt.Print(maintainer.Name + ", ")
+			} else {
+				fmt.Print(maintainer.Email + ", ")
+			}
 		} else {
-			fmt.Print(maintainer.Name)
+			if maintainer.Name != "" {
+				fmt.Print(maintainer.Name)
+			} else {
+				fmt.Print(maintainer.Email)
+			}
 		}
 	}
 	fmt.Println()
