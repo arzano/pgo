@@ -1,3 +1,3 @@
-# soko-cli
+# pgo
 
-A CLI for packages.g.o - still are WIP currently
+A CLI for packages.g.o - still a WIP currently
