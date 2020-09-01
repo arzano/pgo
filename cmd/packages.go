@@ -33,10 +33,12 @@ func showPackage(searchTerm string, first bool) {
 
 	fmt.Println("")
 	fmt.Println("")
-	fmt.Println(Overlined(Underline(Bold("                                        " + gpackage.Atom + "                                        "))))
+	fmt.Println(Underline(Bold(strings.Repeat(" ", 50-len(gpackage.Atom)/2) + strings.Repeat(" ", len(gpackage.Atom)) + strings.Repeat(" ", 50-len(gpackage.Atom)/2))))
+	fmt.Println(strings.Repeat(" ", 50-len(gpackage.Atom)/2) + strings.Repeat(" ", len(gpackage.Atom)) + strings.Repeat(" ", 50-len(gpackage.Atom)/2))
+	fmt.Println(Bold(strings.Repeat(" ", 50-len(gpackage.Atom)/2) + gpackage.Atom + strings.Repeat(" ", 50-len(gpackage.Atom)/2)))
 	fmt.Println("")
-	fmt.Println(gpackage.Description())
-	fmt.Println(gpackage.Versions[0].Homepage[0])
+	fmt.Println(strings.Repeat(" ", 50-len(gpackage.Description())/2) + gpackage.Description())
+	fmt.Println(strings.Repeat(" ", 50-len(gpackage.Versions[0].Homepage[0])/2) + gpackage.Versions[0].Homepage[0])
 	fmt.Println("")
 
 	if showVersions {
@@ -67,6 +69,8 @@ func showPackage(searchTerm string, first bool) {
 		printChangelog(gpackage.Commits)
 	}
 
+	fmt.Println()
+	fmt.Println(Underline(Bold(strings.Repeat(" ", 50-len(gpackage.Atom)/2) + strings.Repeat(" ", len(gpackage.Atom)) + strings.Repeat(" ", 50-len(gpackage.Atom)/2))))
 	fmt.Println()
 }
 
