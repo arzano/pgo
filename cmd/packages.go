@@ -98,7 +98,9 @@ func printVersions(versions []*models.Version) {
 		fmt.Print(Bold("  "+version.Version+":  " + strings.Repeat(" ", maxLength - len(version.Version))))
 
 		for _, arch := range arches {
-			if strings.Contains(" " + version.Keywords + " ", " " + arch + " ") {
+			if len(version.Masks) != 0 {
+				fmt.Print(Red("  x   "))
+			} else if strings.Contains(" " + version.Keywords + " ", " " + arch + " ") {
 				fmt.Print(Green("  +   "))
 			} else if strings.Contains(" " + version.Keywords + " ", " ~" + arch + " ") {
 				fmt.Print(Yellow("  -   "))
@@ -311,6 +313,9 @@ func buildSearchQuery(searchTerm, resultSize string) string {
           PkgCheckResults {
             Class,
             Message
+          },
+          Masks {
+            Versions,
           }
 		},
         Longdescription,        
