@@ -78,8 +78,33 @@ func printVersions(versions []*models.Version) {
 	sort.Slice(versions, func(i, j int) bool {
 		return versions[i].GreaterThan(*versions[j])
 	})
+
+	maxLength := 0
 	for _, version := range versions {
-		fmt.Println(Bold("  "+version.Version+": "), version.Keywords)
+		if len(version.Version) > maxLength {
+			maxLength = len(version.Version)
+		}
+	}
+
+	arches := []string{"amd64", "x86", "alpha", "arm", "arm64", "hppa", "ia64", "ppc", "ppc64", "sparc"}
+
+	fmt.Print(strings.Repeat(" ", maxLength + 4))
+	for _, arch := range arches {
+		fmt.Print(" " +  arch + " ")
+	}
+	fmt.Println()
+
+	for _, version := range versions {
+		fmt.Print(Bold("  "+version.Version+":  " + strings.Repeat(" ", maxLength - len(version.Version))))
+
+		for _, arch := range arches {
+			if strings.Contains(" " + version.Keywords + " ", " " + arch + " ") {
+				fmt.Print(Green("  +   "))
+			} else if strings.Contains(" " + version.Keywords + " ", " ~" + arch + " ") {
+				fmt.Print(Yellow("  -   "))
+			}
+		}
+		fmt.Println()
 	}
 	fmt.Println("")
 }
