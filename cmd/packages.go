@@ -290,7 +290,8 @@ func buildSearchQuery(searchTerm, resultSize string) string {
 		},
         Longdescription,        
         Maintainers {
-          Name
+          Name,
+          Email
         },
         Bugs {
           Id,
