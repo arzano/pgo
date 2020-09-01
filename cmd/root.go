@@ -54,6 +54,7 @@ func Execute() {
 	rootCmd.Flags().BoolVarP(&showMetadata, "metadata", "m", false, "Show metadata of the packages")
 	rootCmd.Flags().BoolVarP(&showVersions, "versions", "v", false, "Show available versions of the packages")
 	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(completionCmd)
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -74,8 +75,8 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("err reading config file")
-		fmt.Println(err)
+		//fmt.Println("err reading config file")
+		//fmt.Println(err)
 	}
 
 	setViperDefaults()
