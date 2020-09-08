@@ -103,7 +103,7 @@ func printVersions(versions []*models.Version) {
 			} else if strings.Contains(" " + version.Keywords + " ", " " + arch + " ") {
 				fmt.Print(Green("  +   "))
 			} else if strings.Contains(" " + version.Keywords + " ", " ~" + arch + " ") {
-				fmt.Print(Yellow("  -   "))
+				fmt.Print(Yellow("  ~   "))
 			} else {
 				fmt.Print("      ")
 			}
